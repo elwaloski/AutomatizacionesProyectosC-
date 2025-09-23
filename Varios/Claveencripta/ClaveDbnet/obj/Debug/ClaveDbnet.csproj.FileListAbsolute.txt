@@ -1,0 +1,11 @@
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\bin\Debug\ClaveDbnet.exe.config
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\bin\Debug\ClaveDbnet.exe
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\bin\Debug\ClaveDbnet.pdb
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.csproj.AssemblyReference.cache
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.csproj.SuggestedBindingRedirects.cache
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.Form1.resources
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.Properties.Resources.resources
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.csproj.GenerateResource.cache
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.csproj.CoreCompileInputs.cache
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.exe
+C:\Users\waldo.gonzalez\source\repos\ClaveDbnet\ClaveDbnet\obj\Debug\ClaveDbnet.pdb
