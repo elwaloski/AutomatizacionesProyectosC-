@@ -1,0 +1,38 @@
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.exe
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.deps.json
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.runtimeconfig.json
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.dll
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.pdb
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.Form1.resources
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.GenerateResource.cache
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.AssemblyInfoInputs.cache
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.AssemblyInfo.cs
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.CoreCompileInputs.cache
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.dll
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\refint\GeneraTXT.dll
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.pdb
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.genruntimeconfig.cache
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\ref\GeneraTXT.dll
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.AssemblyReference.cache
+C:\Users\WaldoGonzalez\source\repos\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.Up2Date
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.exe
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.deps.json
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.runtimeconfig.json
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.dll
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\GeneraTXT.pdb
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.AssemblyReference.cache
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.Form1.resources
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.GenerateResource.cache
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.GeneratedMSBuildEditorConfig.editorconfig
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.AssemblyInfoInputs.cache
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.AssemblyInfo.cs
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.CoreCompileInputs.cache
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.csproj.Up2Date
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.dll
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\refint\GeneraTXT.dll
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.pdb
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\GeneraTXT.genruntimeconfig.cache
+E:\drive\OneDrive - ESTELA\GeneraTXT\GeneraTXT\obj\Debug\net8.0-windows\ref\GeneraTXT.dll

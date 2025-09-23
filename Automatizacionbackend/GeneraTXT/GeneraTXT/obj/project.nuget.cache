@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "S+8vRN+8kvk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\walo_\\OneDrive\\Desktop\\Repos\\Work\\GeneraTXT\\GeneraTXT\\GeneraTXT.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\walo_\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
