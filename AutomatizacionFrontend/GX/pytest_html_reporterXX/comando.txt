@@ -1,0 +1,1 @@
+pytest -s -v prueba.py --html=Htmlreport.html --self-contained-html

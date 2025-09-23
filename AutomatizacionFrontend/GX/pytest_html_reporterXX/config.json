@@ -1,0 +1,27 @@
+{
+    "Sitio":
+    {
+        "URLWEB": "https://gxnew-qa.cl.dbnetcorp.com/",
+        "Usuario": "waldo.gonzalez.admin",
+        "LoginPass": "W.gonzalez8888"
+    },
+    "Activar":
+    {
+        "EI": "NO",
+        "CC": "NO",
+        "CI": "NO",
+        "HB":"NO",
+        "HS":"NO",
+        "CS":"NO",
+        "BS":"NO",
+        "FondosFM":"NO",
+        "FondosFI":"NO",
+        "Circular":"NO",
+        "CambioEmpresa":"SI",
+        "CrearParametros":"NO",
+        "ConsultaConceptos":"NO",
+        "NecesitoAyuda":"SI",
+        "EditarInstancias":"SI",
+        "MantenedorTextos":"SI"
+    }
+}
