@@ -1,0 +1,107 @@
+create procedure [dbo].[Carga_Documentos_cf_referencia_802] @CantidadCargar INT,@Tipo_docu INT,@RutEmisor varchar(12),@digi varchar(1)
+ as
+begin
+DECLARE @var1 varchar(30); 
+DECLARE @UltimoFolio INT = 0;
+DECLARE @Fecha varchar(30); 
+DECLARE @periodo INT = 0;
+DECLARE @codi_acec INT = 0; 
+DECLARE @codi_acec1 INT = 0;
+Declare @corr_cont int =0;
+Declare @desde int =0;
+
+declare @Existingdate datetime 
+Set @Existingdate=GETDATE() 
+set @Fecha= (Select  CONVERT(varchar,@Existingdate,23) as [yyyy-mm-dd])
+
+set @periodo=(SELECT FORMAT( getdate(), 'yyyyMM'))
+
+
+
+IF(@Tipo_docu <>56 and  @Tipo_docu <>61)
+        BEGIN
+	RETURN   'Tipo de documento No es electronico'
+	END
+Else 
+     BEGIN
+
+
+select top 1 @desde=foli_docu from dte_control where tipo_docu=@Tipo_docu  order by FOLI_DOCU desc 
+
+if(@desde = 0)
+Begin
+   set @desde+= 1;
+END
+
+IF(@Tipo_docu=56)	Begin
+WHILE(@UltimoFolio < @CantidadCargar ) BEGIN
+	set @UltimoFolio+= 1;
+	set @desde+= 1
+	
+
+INSERT [dbo].[dte_control] (TIPO_OPER, RUTT_EMIS, [DIGI_EMIS], [RAZO_EMIS], [TIPO_EMIS], [RUTT_RECE], [DIGI_RECE], [RAZO_RECE], 
+[TIPO_DOCU], [FOLI_DOCU], [FECH_EMIS], [CORR_DOCU_DTO], [ESTA_RECE_SII], [FECH_RECE_SII], [FECH_INFO_SII], [NUME_ATEN_SII], [CORR_ARCH_DTE],
+ [ESTA_CARG_SUIT], [FECH_CARG_SUIT], [ESTA_RCAC_SII], [FECH_RCAC_SII], [ESTA_CESI_SII], [FECH_CESI_SII], [MONT_CESI_SII], [RUTT_CESI_SII], 
+ [DIGI_CESI_SII], [RAZO_CESI_SII], [CORR_ARCH_CESI], [ESTA_DOCU_COME], [FECH_DOCU_COME], [USUA_RESP_COME], [MOTI_REPA_COME], [ESTA_DOCU_RCBM],
+  [FECH_DOCU_RCBM], [MONT_NETO], [MONT_EXEN], [MONT_IVA], [MONT_TOTA], [MONT_TOTA_SII], [ORDE_COMP], [NUME_ORCM], [ESTA_DOCU_TECN], [FECH_DOCU_TECN],
+   [MOTI_REPA_TECN], [ESTA_ENVI_SII], [FECH_ENVI_SII], [ESTA_ENVI_CLI], [FECH_ENVI_CLI], [mont_neto_sii], [mont_exen_sii], [mont_iva_sii], 
+   [codi_otro_sii], [valo_otro_sii], [tasa_otro_sii], [TIPO_COVE], [MONT_ISIR], [MONT_INOR], [CODI_INOR], [MONT_NACF], [IVAA_ACFI], [IVAU_COMU], 
+   [IMPU_SDAC], [IVAN_NORE], [TABA_PURO], [TABA_CIGA], [TABA_ELAB], [NOCD_SFCO], [PERI_TRIB], [IVAR_TOTA], [IVAR_PARC], [IVAN_RETE], [IVAP_PROP],
+    [IVAT_TERC], [RUTT_ELFA], [DIGI_ELFA], [NETO_CLFA], [EXEN_CLFA], [IVAA_CLFA], [IVAA_FDPL], [TICO_REFE], [FODO_REFE], [NUMM_IREX], [NACI_REEX],
+	 [CRED_EMCO], [IMPT_ZOFR], [GARA_DEEN], [INDI_VSCO], [INDI_SEPE], [MONT_NOFA], [TOTA_MOPE], [VEPA_TRNA], [VEPA_TRIN], [NUME_INTE], [CODI_SUCU],
+	  [ESTA_RCV], [DTEC_NELE], [TIPO_COMP]) VALUES
+	   ('RCP',78079790,'8','DBNET','',''+@RutEmisor+'', ''+@digi+'','DBNET',56,@desde, '2022-04-12',916805,'NO Recibido', NULL, NULL, NULL, NULL,'Cargado OK', 
+	   CAST(N'2022-04-12 12:46:08.623' AS DateTime),'Sin Evento', NULL,'NO Cedido', NULL, NULL, NULL, NULL, NULL, NULL,'Sin Respuesta', NULL, 
+	   NULL, NULL,'Sin Recibo', NULL,199200,0,37848,237048, NULL, N'Sin OC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
+	   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 
+	   NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL)
+
+
+select top 1 @corr_cont=CORR_CONT from [dte_control] where tipo_docu=@Tipo_docu   order by CORR_CONT desc 
+
+
+INSERT [dbo].[DTEC_EVNT_DOCU] ( [CORR_CONT], [CODI_ACCN], [CODI_ESAC], [FECH_EVNT], [CODI_USUA], [MOTI_EVNT], [ESTA_EVNT], [MSGN_EVNT],
+ [FECH_REGI]) VALUES (@corr_cont,'Recepcion DTE','Cargado OK', @Fecha,'esuite', NULL, 'Evento Suite', NULL,@Fecha)
+
+INSERT [dbo].[dtec_refe_docu] ( [tipo_oper], [corr_cont], [corr_uniq], [rutt_emis], [digi_emis], [tipo_docu], [foli_docu], [nume_refe],
+ [tipo_refe], [refe_glob], [foli_refe], [fech_refe], [codi_refe], [razo_refe], [rutt_otro], [digi_otro], [iden_adic]) VALUES 
+ ('RCP', @corr_cont, 916805,''+@RutEmisor+'', ''+@digi+'', @Tipo_docu, @desde, 1,'802', NULL,@desde, @Fecha, NULL, NULL, NULL, NULL,'')
+ 
+ end 
+ end
+ IF(@Tipo_docu=61)	Begin
+WHILE(@UltimoFolio < @CantidadCargar ) BEGIN
+	set @UltimoFolio+= 1;
+	set @desde+= 1
+	
+
+INSERT [dbo].[dte_control] ( [TIPO_OPER], [RUTT_EMIS], [DIGI_EMIS], [RAZO_EMIS], [TIPO_EMIS], [RUTT_RECE], [DIGI_RECE], [RAZO_RECE], [TIPO_DOCU], [FOLI_DOCU],
+ [FECH_EMIS], [CORR_DOCU_DTO], [ESTA_RECE_SII], [FECH_RECE_SII], [FECH_INFO_SII], [NUME_ATEN_SII], [CORR_ARCH_DTE], [ESTA_CARG_SUIT], [FECH_CARG_SUIT], [ESTA_RCAC_SII],
+  [FECH_RCAC_SII], [ESTA_CESI_SII], [FECH_CESI_SII], [MONT_CESI_SII], [RUTT_CESI_SII], [DIGI_CESI_SII], [RAZO_CESI_SII], [CORR_ARCH_CESI], [ESTA_DOCU_COME], [FECH_DOCU_COME],
+   [USUA_RESP_COME], [MOTI_REPA_COME], [ESTA_DOCU_RCBM], [FECH_DOCU_RCBM], [MONT_NETO], [MONT_EXEN], [MONT_IVA], [MONT_TOTA], [MONT_TOTA_SII], [ORDE_COMP], [NUME_ORCM], 
+   [ESTA_DOCU_TECN], [FECH_DOCU_TECN], [MOTI_REPA_TECN], [ESTA_ENVI_SII], [FECH_ENVI_SII], [ESTA_ENVI_CLI], [FECH_ENVI_CLI], [mont_neto_sii], [mont_exen_sii], 
+   [mont_iva_sii], [codi_otro_sii], [valo_otro_sii], [tasa_otro_sii], [TIPO_COVE], [MONT_ISIR], [MONT_INOR], [CODI_INOR], [MONT_NACF], [IVAA_ACFI], [IVAU_COMU],
+    [IMPU_SDAC], [IVAN_NORE], [TABA_PURO], [TABA_CIGA], [TABA_ELAB], [NOCD_SFCO], [PERI_TRIB], [IVAR_TOTA], [IVAR_PARC], [IVAN_RETE], [IVAP_PROP], [IVAT_TERC],
+	 [RUTT_ELFA], [DIGI_ELFA], [NETO_CLFA], [EXEN_CLFA], [IVAA_CLFA], [IVAA_FDPL], [TICO_REFE], [FODO_REFE], [NUMM_IREX], [NACI_REEX], [CRED_EMCO], [IMPT_ZOFR],
+	  [GARA_DEEN], [INDI_VSCO], [INDI_SEPE], [MONT_NOFA], [TOTA_MOPE], [VEPA_TRNA], [VEPA_TRIN], [NUME_INTE], [CODI_SUCU], [ESTA_RCV], [DTEC_NELE], [TIPO_COMP]) VALUES
+	   	  ('RCP',78079790,'8', N'DBNET', '',''+@RutEmisor+'', ''+@digi+'', 'DBNET',61,@desde,'2022-04-12',916909,'NO Recibido', NULL, NULL, NULL, NULL, 'Cargado OK',
+	   CAST(N'2022-04-12 17:04:42.113' AS DateTime),'Sin Evento', NULL,'NO Cedido', NULL, NULL, NULL, NULL, NULL, NULL,'Sin Respuesta', NULL, NULL, NULL, 'Sin Recibo',
+	    NULL,199200, 0,37848, 237048, NULL,'Sin OC', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+		 NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+		  NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,0, NULL)
+
+
+select top 1 @corr_cont=CORR_CONT from [dte_control] where tipo_docu=@Tipo_docu   order by CORR_CONT desc 
+
+
+INSERT [dbo].[DTEC_EVNT_DOCU] ( [CORR_CONT], [CODI_ACCN], [CODI_ESAC], [FECH_EVNT], [CODI_USUA], [MOTI_EVNT], [ESTA_EVNT], [MSGN_EVNT], [FECH_REGI]) VALUES 
+ (@corr_cont,'Recepcion DTE','Cargado OK', @Fecha,'esuite', NULL,'Evento Suite', NULL, @Fecha)
+
+INSERT [dbo].[dtec_refe_docu] ( [tipo_oper], [corr_cont], [corr_uniq], [rutt_emis], [digi_emis], [tipo_docu], [foli_docu], [nume_refe], [tipo_refe],
+ [refe_glob], [foli_refe], [fech_refe], [codi_refe], [razo_refe], [rutt_otro], [digi_otro], [iden_adic]) VALUES 
+('RCP', @corr_cont, 916909, ''+@RutEmisor+'', ''+@digi+'', @Tipo_docu, @desde,1,'802', NULL,@desde, @Fecha, NULL, NULL, NULL, NULL, '')
+
+ end 
+ end
+ END
+END

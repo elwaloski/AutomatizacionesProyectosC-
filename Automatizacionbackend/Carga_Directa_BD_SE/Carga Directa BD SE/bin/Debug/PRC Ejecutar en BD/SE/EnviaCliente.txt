@@ -1,0 +1,21 @@
+Create  procedure [dbo].[EnviaCliente] 
+ as
+begin
+
+INSERT INTO qse_docu_serv (CODI_SERV ,CODI_EMEX ,CODI_EMPR ,TIPO_DOCU ,FOLI_DOCU ,ESTA_PROC ,TIME_PROC ,CANT_PROC ,CODI_DOCU ,
+TABL_ORIG ,VALO_PK1  ,VALO_PK2  ,VALO_PK3 ,VALO_PK4  ,VALO_PK5  ,TABL_ESTA , FLAG_DOCU)
+SELECT 'dte_envi_clie',codi_emex ,codi_empr,tipo_docu,foli_docu,'ING',getdate(), 1, 'DTE' ,'DTE_ENCA_DOCU',codi_emex ,codi_empr,
+tipo_docu,foli_docu,substring(convert(char,getdate(),120),0,8), 'OFF', '1'
+ FROM dte_enca_docu_hold t1
+WHERE t1.esta_docu='DOK' 
+and t1.codi_emex='DEMO'
+and NOT EXISTS(SELECT *
+                    FROM qse_docu_serv t2
+                   WHERE t2.codi_emex = t1.codi_emex 
+				   and t2.codi_empr = t1.codi_empr  
+				   and t2.foli_docu = t1.foli_docu 
+				   and t2.tipo_docu = t1.tipo_docu  
+				   and t2.CODI_SERV='dte_envi_clie'
+				   )
+
+end

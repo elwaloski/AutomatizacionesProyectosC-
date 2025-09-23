@@ -1,0 +1,29 @@
+CREATE procedure [dbo].[traspasoSE62] 
+ as
+begin
+INSERT [dbo].[qmta_rece_info] ( [mail_msid], [mail_from], [mail_into], [mail_incc], [mail_subj],
+ [mail_cdat], [mail_esta], [mail_msge], [mail_fing], [fech_proc], [nmro_rtry]) 
+ select dbqa.CODI_ARCH, N'waldogonzalez@mt5.dbnetcorp.com', N'jorgeflores@mt5.dbnetcorp.com', N'', N'Envio de NOTA DE CREDITO ELECTR?NICA Folio: '+CAST(dbqa.CODI_ARCH as varchar(10))+', de empresa: 78079790-8', N'2019-07-09 14:09:34', N'NEW', NULL, CAST(N'2019-07-09 10:09:37.570' AS DateTime), NULL, NULL
+ from DBQ_ARCH as dbqa inner join DBQ_ARCH_CLOB as clob on dbqa.CODI_ARCH = clob.CODI_ARCH  
+where dbqa.EXTE_ARCH like 'xml'
+and dbqa.CODI_SERV='dbq_envi_mail'
+and NOMB_ARCH like '%envCli%'
+and NOT EXISTS(SELECT *
+                    FROM [qmta_rece_part] t2
+                   WHERE t2.mail_msid = dbqa.codi_arch 
+				   and t2.mail_msid = clob.codi_arch  
+				   )
+
+INSERT [dbo].[qmta_rece_part] ([mail_msid], [part_txml], [part_filn], [part_type], 
+[part_cset], [part_cb64], [part_esta], [part_msge], [part_fing]) 
+select dbqa.CODI_ARCH, N'DocumentoProveedor', dbqa.NOMB_ARCH, N'text/xml', N'',clob.CLOB_ARCH, N'NEW', NULL, CONVERT(VARCHAR(23), GETDATE(), 121)
+ from DBQ_ARCH as dbqa inner join DBQ_ARCH_CLOB as clob on dbqa.CODI_ARCH = clob.CODI_ARCH  
+where dbqa.EXTE_ARCH like 'xml'
+and dbqa.CODI_SERV='dbq_envi_mail'
+and NOMB_ARCH like '%envCli%'
+and NOT EXISTS(SELECT *
+                    FROM [qmta_rece_part] t2
+                   WHERE t2.mail_msid = dbqa.codi_arch 
+				   and t2.mail_msid = clob.codi_arch  
+				   )
+end

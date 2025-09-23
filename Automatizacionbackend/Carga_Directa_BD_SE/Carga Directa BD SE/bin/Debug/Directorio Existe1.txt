@@ -1,0 +1,7 @@
+A0;Perú y Colombia. En;17:27;2220;Kapaza;878;val5;val6;val7;val8;val9;
+A;33;1.0;8;2020-11-20;;;6;;;3;2020-11-20;2020-11-20;2020-11-20;PE;5462;45;2019-08-19;78079790-8;DBNET;TIC;;;8;SANTIAGO;;;;78079790-8;;DBNET;TIC;065-2265500;AV SIEMPRE VIVA;PUERTO MONTT;LLANQUIHUE;;;;;;;;;;598976;0;;19.00;113805;;;;;;712781;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+A1;726000;
+B;1;;Jarabe p/preparar bebidas;;;;;1;;;;218858;;;;;;;;;218858;;;;;;;;
+B;2;;Margarina;;;;;1;;;;380118;;;;;;;;;380118;;;;;;;;
+G;Lat11;Long22;1;11;22;33;44;Lat11-1;Long22-2;2;
+M; 1;Waldo.gonzalez@dbnetcorp.com;Waldo.gonzalez@dbnetcorp.com;Waldo.gonzalez@dbnetcorp.com;PDF de pruebas;

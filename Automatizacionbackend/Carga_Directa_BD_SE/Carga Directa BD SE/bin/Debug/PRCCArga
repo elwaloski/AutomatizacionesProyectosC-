@@ -1,0 +1,358 @@
+Create procedure [dbo].[Carga_Documentos] @CantidadCargar INT,@Tipo_docu INT,@Holding varchar(12),@RutEmisor varchar(12),@digi varchar(1), @codi_empr INT
+ as
+begin
+DECLARE @var1 varchar(30); 
+DECLARE @UltimoFolio INT = 0;
+DECLARE @Fecha varchar(30); 
+DECLARE @periodo INT = 0;
+DECLARE @codi_acec INT = 0; 
+DECLARE @codi_acec1 INT = 0;
+
+declare @Existingdate datetime 
+Set @Existingdate=GETDATE() 
+set @Fecha= (Select  CONVERT(varchar,@Existingdate,23) as [yyyy-mm-dd])
+
+set @periodo=(SELECT FORMAT( getdate(), 'yyyyMM'))
+
+
+select @codi_acec=codi_acec from dte_acti_econ where codi_acec=620200
+
+if(@codi_acec = 0)
+Begin
+insert dte_acti_econ values (620200,'Dbnet','Dbnet', null)
+END
+
+select @codi_acec1=codi_acec from dte_acec_empr_hold where codi_acec=620200 and codi_emex=''+@Holding+''
+
+if(@codi_acec1 = 0)
+Begin
+insert dte_acec_empr_hold values(''+@Holding+'',1,620200)
+END
+
+IF(@Tipo_docu <> 33 AND  @Tipo_docu <>34 AND  @Tipo_docu <>39 and  @Tipo_docu <>41 and  @Tipo_docu <>43 and  @Tipo_docu <>46 and  @Tipo_docu <> 52 and  @Tipo_docu <>56 and  @Tipo_docu <>61 and  @Tipo_docu <>110 and  @Tipo_docu <>111 and  @Tipo_docu <>112)
+        BEGIN
+	RETURN   'Tipo de documento No es electronico'
+	END
+Else 
+     BEGIN
+
+IF(@Tipo_docu<>39 and @Tipo_docu<>41)BEGIN
+
+   select top 1 @UltimoFolio=foli_docu from dte_enca_docu_hold where tipo_docu=@Tipo_docu and foli_docu < 1012070  order by FOLI_DOCU desc 
+	DECLARE @Total INT = @CantidadCargar+@UltimoFolio;
+
+	
+
+IF(@Tipo_docu=33)	Begin
+			
+WHILE(@UltimoFolio < @Total ) BEGIN
+	set @UltimoFolio+= 1;
+
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values ( ''+@Holding+'', 1, @Tipo_docu, @UltimoFolio,''+@RutEmisor+'', ''+@digi+'', 80043600, '1', 23834, @Fecha, 'ING', 28362, 'KUEHNE + NAGEL LTDA.', 'SERVICIOS DETRANSPORTES Y SERV.', 'AV. APOQUINDO 4501 PISO 14 SANTIAGO CHILE', 'LAS CONDES', ' BASF Chile S.A.', ' FABRICACION PRODUCTOS QUIMICOS INDU', ' Avenida Carrascal3851', 'Santiago', 4528, 19, null, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, '2022-12-12', null, null, null, null, 'SANTIAGO', null, 80043600, '1', ' 1038589601', null, 'Santiago', ' Avenida Carrascal3851', 'Santiago', null, null, null, '', null, null, '', '', '', 0, null, null, null, null, null, null, null, 28362, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'Collect Fee', 1, 6053, 6053, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, 'Desconsolidacion', 1, 17781, 17781, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 33','S','ING', NULL, NULL, @periodo)
+							
+								END
+								
+			print    'Carga Documento 33 ultimo folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+						 END
+
+			
+
+	IF(@Tipo_docu=34)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, @RutEmisor,''+ @digi+'', 96843130, '7', 0, @Fecha, 'ING', 5553806, 'KUEHNE + NAGEL LTDA.', 'SERVICIOS DE TRANSPORTES Y SERV.', 'AV. APOQUINDO 4501 PISO 14 SANTIAGO CHILE', 'LAS CONDES', 'Komatsu Chile S.A.', 'IMP.VTA MAQ.DE MOTORES Y REPUESTO', 'Avenida Americo Vespucio 0631', 'Quilicura', null, null, '', '30 Days', 'HAWB^^1038669534^^MAWB^^157-12584736^^Origin^^Brussels^^Destination^^Santiago^^Flight(s)^^QR/8147^^ETD^^11.04.2021^^Insurance^^Not arranged by KN^^INCOTERM^^EXW VILVOORDE', '1038669534 / 157-12584736^^       40^^Pieces^^SPARE PARTS FOR KOMATSUEQUIPMENT^^      777.10^^      3.271^^^^         ^^^^^^            ^^           ^^^^         ^^^^^^            ^^           ', '^^         ^^^^^^            ^^           ^^^^         ^^^^^^            ^^           ^^^^         ^^^^^^            ^^           ', '^^         ^^^^^^            ^^           ^^^^         ^^^^^^            ^^           ^^^^         ^^^^^^            ^^           ', '6560.13', '0.00', '^^^^USER:gustavo.picado', '', null, null, 2, null, null, null, null, null, '2021-05-12', null, null, null, null, 'SANTIAGO', null, 96843130, '7', '1038669534', null, 'Quilicura', 'Avenida Americo Vespucio 0631', 'Quilicura', null, null, null, '', null, null, '', '', '', 5553806, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'Flete A�reo', 1, 5364591, 5364591, 1, null, null, null, null, null, null, null, 6336.63, 'EUR', 846.6, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio , 2, 'Manejo Terminal en origen', 1, 10159, 10159, 1, null, null, null, null, null, null, null, 12, 'EUR', 846.6, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio , 3, '1500 PICK UP', 1, 78988, 78988, 1, null, null, null, null, null, null, null, 93.3, 'EUR', 846.6, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio , 4, 'Manejo en origen', 1, 21165, 21165, 1, null, null, null, null, null, null, null, 25, 'EUR', 846.6, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio , 5, 'Tasa Escaneo', 1, 78903, 78903, 1, null, null, null, null, null, null, null, 93.2, 'EUR', 846.6, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 34','S','ING', NULL, NULL, @periodo)
+								
+							END
+			print    'Carga Documento 34 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+
+
+	IF(@Tipo_docu=43)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 78079790, '8', 33, @Fecha, 'ING', 39, 'DBNET Ingenieria de Software', 'venta de confites', '18 sep 1234', ' HUECHURABA', 'dbnet', 'Papas', 'dbnet', ' CERRILLOS', 6, 19.00, '', '', '', '', '', '', '', '', '', '', null, null, 2, null, 0, null, null, null, '2018-03-16', null, null, null, null, 'SANTIAGO', null, null, null, '111', '511551', 'SANTIAGO', 'dbnet', ' CERRILLOS', null, null, null, '', null, null, '', '', '', 0, 0, 0, 0, 0, 0, 0, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'a', 1, 3, 3, null, 'a', null, null, null, null, null, null, null, null, null, 0, 0, null, 0, null, null, null, null, null, 0, null, null, '22')
+
+insert into dte_deta_codi_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, corr_codi, tipo_codi, codi_item)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 0, 'INT1', '123'), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 1, 'DUN14', '2')
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 43','S','ING', NULL, NULL, @periodo)
+
+								
+								END
+			print    'Carga Documento 43 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	IF(@Tipo_docu=46)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 10777715, '6', 126000, @Fecha, 'ING', 126000, 'UNIVERSIDAD DE LOS LAGOS', 'EDUCACION', 'AVENIDA FUCHSLOCHER 1305', 'OSORNO', 'JOSE LEONEL VILLARROEL CASANOVA', 'OTRAS ACTIV.DE SERV.PERSONALES N.C.P.', 'CARRETERA AUSTRAL KILOMETRO 30 .', 'PUERTO MONTT', 23940, 19.00, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '.', 'PUERTO MONTT', 'CARRETERA AUSTRAL KILOMETRO 30 .', 'PUERTO MONTT', null, null, null, '', null, null, '', '', '', 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'CREDITO', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_suma_impu_hold (codi_emex , codi_empr , tipo_docu , foli_docu , codi_impu, mont_impu, tasa_impu)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, '15', 23940, 19.00)
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'COMPRA DE 63 KILOGRAMOS DE PESCADO FRESCO PARA ALIMENTO DE CONGRIOS VALOR UNITAR', 63, 2000, 126000, null, 'IO $2.000.- EL KILOGRAMO.', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, '15', null, null)
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 46','S','ING', NULL, NULL, @periodo)
+
+
+								END
+			print    'Carga Documento 46 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	IF(@Tipo_docu=52)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 16124089, '3', 0, @Fecha, 'ING', 0, 'BERCOVICH LTDA.', 'FABRICACION, IMPORTACION, VENTA Y EXP', 'A.PDTE.RIESCO 8736 LTA-COND.IND.VENTISQUERO', 'RENCA', 'GARATE MARIO ANDRES ESPINOZA', 'GIRO NO IDENTIFICADO                    ', 'EL HIDALGO 3705', 'Puente Alto', 0, 19, '\FACTURAE_IILP60_1', '.       ', '', '3', '', '', '', '86 CONTROL CALIDAD BERC.|', '.', '2', 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'SANTIAGO', 'EL HIDALGO 3705', 'Puente Alto', null, null, null, '.', null, null, '', '', '', 0, null, null, null, null, null, null, 6, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'SE ENVIAN 5 BLUSAS PARA REPONER PIEZAS', 1, 0, 0, null, null, null, null, 0, null, null, 'UNI', null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, 'MOD. B-61353-600 EMP # 500 SCOTIABANK', 1, 0, 0, null, null, null, null, 0, null, null, 'UNI', null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+insert into dte_deta_codi_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, corr_codi, tipo_codi, codi_item)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 0, 'INT1', '9999'), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, 0, 'INT1', '9999')
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 52','S','ING', NULL, NULL, @periodo)
+
+								END
+			print    'Carga Documento 52 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 	
+			END
+	IF(@Tipo_docu=56)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 78079790, '8', 199200, @Fecha, 'ING', 237048, 'DBNET', 'TIC', '8', 'SANTIAGO', 'DBNET', 'TIC', 'AV SIEMPRE VIVA', 'PUERTO MONTT', 37848, 19.00, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2016-08-19', null, null, null, null, null, null, null, null, '1234567894', '065-2265500', 'LLANQUIHUE', 'AV SIEMPRE VIVA', 'PUERTO MONTT', null, null, null, '', null, null, '', '', '', 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_suma_impu_hold (codi_emex , codi_empr , tipo_docu , foli_docu , codi_impu, mont_impu, tasa_impu)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, '50', 20, 9)
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, 1, 'Coliflor', 1, 864145, 864145, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'R', 100, null, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, 'D�til', 1, 977481, 977481, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'R', null, null, null, 200, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 3, 'Betabel', 1, 842942, 842942, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'R', null, 300, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 4, 'Ajo', 1, 349403, 349403, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'R', 100, 300, null, 200, null)
+
+insert into dte_docu_refe_hold (codi_emex , codi_empr , tipo_docu , foli_docu , nume_refe, tipo_refe, foli_refe, rutt_otro, digi_otro, fech_refe, razo_refe, codi_refe, indi_regl)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, '802', ''+@UltimoFolio+'', null, null, '2022-04-11', null, null, null)
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 56','S','ING', NULL, NULL, @periodo)
+
+
+								END
+			print    'Carga Documento 56 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+
+			END
+	IF(@Tipo_docu=61)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 76065775, '1', 382565, @Fecha, 'ING', 455252, 'KUEHNE + NAGEL LTDA.', 'SERVICIOS DE TRANSPORTES Y SERV.', 'AV. APOQUINDO 4501 PISO 14 SANTIAGO CHILE', 'LAS CONDES', 'Faes Farma Chile, Salud Y Nutricion Limitada', 'VTA AL POR MAYOR DE ALIMENTOS', 'Avenida Apoquindo Alimento Para Animales 6314 Oficina 604', 'Santiago', 72687, 19, '', '0 Days', 'VESSEL :^^POLYNESIA^^VOY :^^0GI2WR1MA^^P.O.L. :^^Bilbao^^ETS :^^28.02.2021^^P.O.D. :^^Arica^^ETA :^^22.04.2021^^^^^^^^', '^^        1^^40'' HC^^^^    24620.00^^     60.000^^CMAU4028654^^        1^^40'' HC^^CONTAINER SAID TO CONTAIN:^^    24620.00^^     60.000^^Seal No. G9669802^^         ^^^^18 Piezas^^            ^^           ', '^^         ^^^^PIENSOS PARA ALIMENTACI�NN^^            ^^           ^^^^         ^^^^ANIMAL^^            ^^           ^^^^         ^^^^FEEDS FOR ANIMAL NUTRITIOO^^            ^^           ', '^^         ^^^^HS CODE:2309909695 80^^            ^^           ^^^^         ^^^^18 PALLETS^^            ^^           ^^^^         ^^^^MERCANCIA EN TRANSITO A^^            ^^           ', '455252.00', '72687.00', 'Anula factura por error en facturaci�n^^^^USER:gilda.jara', '', null, null, 1, null, null, null, null, null, '2021-04-12', null, null, null, null, 'SANTIAGO', null, 76065775, '1', '1037626799', null, 'Santiago', 'Avenida Apoquindo Alimento Para Animales 6314 Oficina 604', 'Santiago', null, null, null, '', null, null, '', '', '', 0, null, null, null, null, null, null, null, 455252, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'Container Guarantee', 1, 126319, 126319, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, 'THC - Import FFF', 1, 108273, 108273, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 3, 'Handling Fee', 1, 36091, 36091, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 4, 'B/L Fee Import', 1, 46918, 46918, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 5, 'GASTOS DE MANIFIESTO', 1, 64964, 64964, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+insert into dte_docu_refe_hold (codi_emex , codi_empr , tipo_docu , foli_docu , nume_refe, tipo_refe, foli_refe, rutt_otro, digi_otro, fech_refe, razo_refe, codi_refe, indi_regl)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, 1, '802', ''+@UltimoFolio+'', null, null, '2021-04-04', null, 3, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, '802', ''+@UltimoFolio+'', null, null, '2021-04-12', null, 2, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 3, '802', ''+@UltimoFolio+'', null, null, '2021-04-12', 'BAL', 2, null)
+--INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+--(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 61','S','ING', NULL, NULL, @periodo)
+
+
+
+								END
+			print    'Carga Documento 61 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	IF(@Tipo_docu=110)	
+			Begin
+	WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 55555555, '5', 0, @Fecha, 'ING', 1000.00, 'SALMONES MULTIEXPORT S.A.', 'GIRO MULTIEXPORT', 'Avda Cardonal 2501', 'Puerto Montt', 'OOO AKRA', '.', 'NAB. REKI SMOLENKI, D.14, LITER A,', 'ST PETERSBURG', null, null, '', '0095000025', '', '', '', '', '', '', '', '', null, null, 2, null, null, null, null, null, '2019-08-02', null, null, 'S100', null, 'Puerto Montt', null, null, null, '0012000678', null, 'ST PETERSBURG', 'NAB. REKI SMOLENKI, D.14, LITER A,', 'ST PETERSBURG', null, null, null, '', null, null, '', '', '', 1000.00, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'Cobr Directa (Cr�dito) 30 d�as', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'DOLAR USA', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_tipo_bult_hold (codi_emex , codi_empr , tipo_docu , foli_docu , codi_tibu, cant_bult, iden_marc, iden_cont, sello_cont, nomb_emis)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 22, 10, null, null, null, null)
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'FROZEN ATLANTIC SALMON HON IND. B 0,5-1 KG IQF', 100, 10.00, 1000.00, null, null, null, null, null, null, null, 'KG', null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+insert into dte_deta_codi_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, corr_codi, tipo_codi, codi_item)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 0, 'INT1', '3000002')
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 110','S','ING', NULL, NULL, @periodo)
+
+								END
+			print    'Carga Documento 110 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	IF(@Tipo_docu=111)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 55555555, '5', 0, @Fecha, 'ING', 25.00, 'MARIENBERG', 'PRODUCCION Y COMERCIALIZACION DE ELEMENTOS PARA LA INDUSTRIA', 'SANTA MARTA', 'MAIP�', 'CERMINARO JUAN MANUEL', 'IMPORTADORES DE PISOS Y ALFOMBRAS', 'AV JUAN MANUEL DE ROSAS 138 � CASTELAR �MORON (1712)', 'CASTELAR  MORON', null, null, 'SRP-VENLACETESTHPM602', '', '', '', '', '0', '0', '', '25.00', '0', null, null, 1, null, null, null, null, null, '2019-04-15', null, null, null, null, 'SANTIAGO', 'GERENCIA', null, null, '20-23644496-2', '(+5411)6860 1925', 'BUENOS AIRES', 'AV JUAN MANUEL DE ROSAS 138 � CASTELAR �MORON (1712)', 'CASTELAR  MORON', null, null, null, '', null, null, '', '', '', 25.00, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'Dep�sito y/o Transferencia', null, null, null, null, null, null, null, null, null, null, null, null, null, 0, 'DOLAR USA', 667.550000, null, 16689, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'PESO CL', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 16689.00)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'Diferencia por tipo de Cambio al pagar Neto de FV 88989', 1, 25.00, 25.00, null, 'Diferencia por tipo de Cambio al pagar Neto de FV 88989', null, null, null, null, null, null, null, null, null, 0.0, 0, null, null, null, null, null, null, null, 0, null, null, null)
+
+insert into dte_docu_refe_hold (codi_emex , codi_empr , tipo_docu , foli_docu , nume_refe, tipo_refe, foli_refe, rutt_otro, digi_otro, fech_refe, razo_refe, codi_refe, indi_regl)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, @UltimoFolio, '13', null, null, '2019-02-27', null, 3, null)
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 111','S','ING', NULL, NULL, @periodo)
+
+								END
+			print    'Carga Documento 111 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	IF(@Tipo_docu=112)	
+			Begin
+			WHILE(@UltimoFolio < @Total ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into dte_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, rutt_emis, digi_emis, rutt_rece, digi_rece, mont_neto, fech_emis, esta_docu, mont_tota, nomb_emis, giro_emis, dire_orig, comu_orig, nomb_rece, giro_rece, dire_rece, comu_rece, impu_vaag, tasa_vaag, impr_dest, val1, val2, val3, val4, val5, val6, val7, val8, val9, entr_bien, vent_serv, form_pago, fech_canc, dias_tepa, codi_tepa, mont_brut, moda_pago, fech_venc, peri_desd, peri_hast, nomb_sucu, codi_sucu, ciud_orig, codi_vend, rutt_mand, digi_mand, codi_rece, cont_rece, ciud_rece, dire_post, comu_post, ciud_post, rutt_sofa, digi_sofa, info_tran, rutt_tran, digi_tran, dire_dest, comu_dest, ciud_dest, mont_exen, impu_vanr, cred_es65, gara_enva, mont_nofa, valo_paga, sald_ante, indi_vegd, subt_vese, mont_base, mail_rece, from_paex, tipo_cupa, cuen_pago, banc_pago, glos_pago, iden_adem, iden_reex, naci_ext, nume_book, codi_puem, codi_pude, cant_tara, umed_tara, tota_brut, unid_brut, tota_neto, unid_neto, tota_item, tota_bult, tipo_mone, tipo_camb, neto_otmo, noaf_otmo, faca_otmo, maco_otmo, ivag_otmo, codi_oper, codi_emtr, foli_auto, fech_auto, ivno_otmo, tipo_impr, mont_canc, sald_inso, codi_suad, rutt_chof, digi_chof, nomb_chof, tipo_moom, mont_baco, ivag_prop, ivag_terc, tran_vent, tran_comp, tipo_faes, tipo_turi, feho_ted, indi_nore, moda_vent, clau_expo, tota_clex, viaa_tran, nomb_tran, rutt_citr, digi_citr, nomb_citr, iden_citr, iden_puem, iden_pude, mont_flet, mont_segu, pais_rece, pais_dest,foli_clie, mont_otmo)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, ''+@RutEmisor+'', ''+@digi+'', 78079790, '8', 0, @Fecha, 'ING', 87840.76, 'GE HEALTHCARE INTERNATIONAL LLC AGENCIA EN CHILE', 'REP DE OTROS EQ ELECT Y OPTICOS N.C.P.', 'Isidora Goyenechea 2800,Piso 21', 'Santiago', 'GE HEALTHCARE COLOMBIA S.A.S.', 'VENTA AL POR MAYOR NO ESPECIALIZADA', 'CALLE 103 NO. 14 A-43', 'Bogota', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '2019-05-13', null, null, null, null, 'Las Condes', null, null, null, null, null, 'BOGOTA, D.C.', 'CALLE 103 NO. 14 A-43', 'Bogota', null, null, null, '', null, null, 'CALLE 103 NO. 14 A-43', 'Bogota', 'BOGOTA, D.C.', 87840.76, null, null, null, null, null, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'DOLAR USA', 693, 60873646.68, null, null, null, null, null, 1, null, null, null, null, null, null, null, null, null, null, 'PESO CL', null, null, null, null, null, null, null, null, null, 1, 8, null, null, null, null, null, null, null, null, null, null, null, null, 202, null, 60873646.68)
+
+insert into dte_deta_acec_hold (codi_emex, codi_empr, tipo_docu, foli_docu, corr_acec, codi_acec)
+values (''+@Holding+'', 1,@Tipo_docu, @UltimoFolio, 0, '620200')
+
+insert into dte_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, nomb_item, cant_item, prec_item, neto_item, indi_exen, desc_item, cant_refe, unid_refe, prec_refe, fech_elab, fech_vepr, unid_medi, prec_mono, codi_mone, fact_conv, desc_porc, dcto_item, reca_porc, reca_item, desc_mone, reca_mone, valo_mone, indi_agen, base_faen, prne_cofi, codi_impu, marg_comer,tipo_codi)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, 'Por la provision de un equipo modelo marca GE Segun propuesta definitiva FDON', 2583.55176, 34, 87840.76, 1, ' Por la provision de un equipo modelo marca GE Segun propuesta definitiva FDON', null, '10', null, null, null, '10', null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null, null)
+
+insert into dte_docu_refe_hold (codi_emex , codi_empr , tipo_docu , foli_docu , nume_refe, tipo_refe, foli_refe, rutt_otro, digi_otro, fech_refe, razo_refe, codi_refe, indi_regl)
+values (''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 1, '110', '18', null, null, '2019-05-13', 'Corrige montos', 3, null), 
+(''+@Holding+'', 1, @Tipo_docu, @UltimoFolio, 2, '801', '56756', null, null, '2019-05-13', null, null, null)
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', 1, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas documento tipo 112','S','ING', NULL, NULL, @periodo)
+
+
+								END
+			print    'Carga Documento 112 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100)) 
+			END
+	END
+
+Else BEGIN
+	
+	    select top 1 @UltimoFolio=foli_docu from bel_enca_docu_hold where tipo_docu=@Tipo_docu  order by FOLI_DOCU desc 
+		DECLARE @TotalBel INT = @CantidadCargar+@UltimoFolio;
+		
+		IF(@Tipo_docu=39)	
+			Begin
+			WHILE(@UltimoFolio < @TotalBel ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into bel_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, vers_enca, fech_emis, indi_serv, indi_mone, pedi_desd, peri_hast, fech_venc, rutt_emis, digi_veri, nomb_emis, giro_emis, codi_sucu, dire_orig, comu_orig, ciud_orig, rutt_rece, digi_rece, codi_inte, nomb_rece, cont_rece, dire_rece, comu_rece, ciud_rece, dire_post, comu_post, ciud_post, mont_neto, esta_docu, mont_exen, tasa_vaag, mont_tota, mont_nofa, tota_peri, sald_ante, valo_paga, tmst_timb, impr_dest,val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, impu_vaag, foli_clie)
+values (''+@Holding+'', @codi_empr,@Tipo_docu, @UltimoFolio, '1.0', @Fecha, 3, null, null, null, '2023-10-30', ''+@RutEmisor+'', ''+@digi+'', 'Dbnet', 'DEPOSITO Y ALMACENAM. Y OTROS SERV.', null, 'AV. JORGE BARRERA N 62', 'IQUIQUE', 'IQUIQUE', 66666666, '6', '66666666', 'CBT ING.Y CONSTR. LTDA', null, 'RECINTO PORTUARIO S N', 'IQUIQUE', 'IQUIQUE', null, null, null, 81147, 'ING', 0, 19, 96565, null, null, null, null, null, '', 'INGRESO 7 PERSONAS POR 30 DIAS', '', '|||||', '', 'CON CHEQUE', '|772.83|28700.20|TERMINAL MOLO|1||22-09-2020|ALEJANDRA VASQUEZ ACEVEDO|OTROS|||', '', '0', '1.00', '', 15418, null)
+
+insert into bel_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, indi_exen, nomb_item, desc_adic, cant_item, unid_med, prec_unic, valo_line, porc_desc, mont_desc, porc_reca, mont_reca)
+values (''+@Holding+'', @codi_empr, @Tipo_docu, @UltimoFolio, 1, null, '21 UND PERMISO ACCESO PERSONAS 1 A 10 DIAS', null, 1.000000, 'UND', 96565, 96565, null, null, null, null)
+
+insert into bel_deta_codi_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, tipo_codi, codi_item)
+values (''+@Holding+'', @codi_empr, @Tipo_docu, @UltimoFolio, 1, 'INT', 'LSP 46560')
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', @codi_empr, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas','S','ING', NULL, NULL, @periodo)
+								
+								END
+			print    'Carga Documento 39 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))
+			END
+
+	IF(@Tipo_docu=41)	
+			Begin
+			WHILE(@UltimoFolio < @TotalBel ) BEGIN
+set @UltimoFolio+= 1;
+    
+insert into bel_enca_docu_hold (codi_emex, codi_empr, tipo_docu, foli_docu, vers_enca, fech_emis, indi_serv, indi_mone, pedi_desd, peri_hast, fech_venc, rutt_emis, digi_veri, nomb_emis, giro_emis, codi_sucu, dire_orig, comu_orig, ciud_orig, rutt_rece, digi_rece, codi_inte, nomb_rece, cont_rece, dire_rece, comu_rece, ciud_rece, dire_post, comu_post, ciud_post, mont_neto, esta_docu, mont_exen, tasa_vaag, mont_tota, mont_nofa, tota_peri, sald_ante, valo_paga, tmst_timb, impr_dest,val1, val2, val3, val4, val5, val6, val7, val8, val9, val10, impu_vaag, foli_clie)
+values (''+@Holding+'', @codi_empr, @Tipo_docu, @UltimoFolio, '1.0', @Fecha, 3, null, null, null, '2023-01-31', ''+@RutEmisor+'', ''+@digi+'', 'Dbnet', 'Arriendo de Oficinas con Muebles', null, 'Avda. El Bosque Norte 500', 'LAS CONDES', null, 9250199, 'K', '0000115971', 'MAIK BUROSE ', null, 'FRAY LEON  12334 LAS CONDES  LAS CONDES', 'LAS CONDES', 'LAS CONDES', null, null, null, 0, 'ING', 32104, 19, 32104, null, null, null, 32104, null, 'FE_NORACID_SCL01', '0094311104-CVARELA-Bol-0040005476', 'SERVICIOS ULTRACORP', '', '', '', '', '219', '', 'Hecho no gravado DL 825 de 1974', '', 0, null)
+
+insert into bel_deta_prse_hold (codi_emex, codi_empr, tipo_docu, foli_docu, nume_line, indi_exen, nomb_item, desc_adic, cant_item, unid_med, prec_unic, valo_line, porc_desc, mont_desc, porc_reca, mont_reca)
+values (''+@Holding+'', @codi_empr,@Tipo_docu, @UltimoFolio, 1, 1, 'Servicio: Arriendo de estacionamiento compartido', null, 1, null, 32104, 32104, null, null, null, null), 
+(''+@Holding+'', @codi_empr, @Tipo_docu, @UltimoFolio, 2, 1, 'Precio vta unitario CLP 32.104 por 1 UN = CLP 32.104,00', null, 1, null, 0, 0, null, null, null, null)
+
+INSERT [dbo].[dte_envi_pdf_hold] ([codi_emex], [codi_empr], [tipo_docu], [foli_docu], [posi_mail], [mail_envi], [mail_cc], [mail_cco], [mail_text], [hace_envi], [ESTA_MLPR], [MAPE_FROM], [MAPE_REF], [peri_part]) VALUES 
+(''+@Holding+'', @codi_empr, @Tipo_docu,@UltimoFolio,1,'Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','Waldo.gonzalez@dbnetcorp.com','PDF de pruebas','S','ING', NULL, NULL, @periodo)
+								
+								END
+			print    'Carga Documento 41 ultimo Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))
+			END
+	  
+	  END
+
+END
+END

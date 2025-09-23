@@ -1,0 +1,128 @@
+/*
+
+Tipo de carga disponibles
+
+RCV_CompraNoIncluir
+RCV_CompraPendiente
+RCV_CompraReclamado
+RCV_CompraRegistro
+RCV_Venta
+BHR
+
+*/
+create  procedure [dbo].[Carga_Documentos_dte_control] @CantidadCargar INT,@Tipo_docu INT,@Tipo_Carga varchar(20)
+ as
+begin
+DECLARE @var1 varchar(30); 
+DECLARE @UltimoFolio INT = 0;
+DECLARE @Fecha varchar(30); 
+DECLARE @Definicion_dte_control varchar(max);
+DECLARE @insertvalor varchar(max);
+
+declare @Existingdate datetime 
+Set @Existingdate=GETDATE() 
+set @Fecha= (Select  CONVERT(varchar,@Existingdate,23) as [yyyy-mm-dd])
+
+SET  @Definicion_dte_control= 'INSERT [dbo].[dte_control] ( [TIPO_OPER], [RUTT_EMIS], [DIGI_EMIS], [RAZO_EMIS], [TIPO_EMIS], [RUTT_RECE], [DIGI_RECE], [RAZO_RECE], [TIPO_DOCU], [FOLI_DOCU], [FECH_EMIS], [CORR_DOCU_DTO],' +
+                        '[ESTA_RECE_SII], [FECH_RECE_SII], [FECH_INFO_SII], [NUME_ATEN_SII], [CORR_ARCH_DTE], [ESTA_CARG_SUIT], [FECH_CARG_SUIT], [ESTA_RCAC_SII], [FECH_RCAC_SII], [ESTA_CESI_SII], [FECH_CESI_SII], [MONT_CESI_SII],' +
+                        '[RUTT_CESI_SII], [DIGI_CESI_SII], [RAZO_CESI_SII], [CORR_ARCH_CESI], [ESTA_DOCU_COME], [FECH_DOCU_COME], [USUA_RESP_COME], [MOTI_REPA_COME], [ESTA_DOCU_RCBM], [FECH_DOCU_RCBM], [MONT_NETO], [MONT_EXEN],' +
+                        '[MONT_IVA], [MONT_TOTA], [MONT_TOTA_SII], [ORDE_COMP], [NUME_ORCM], [ESTA_DOCU_TECN], [FECH_DOCU_TECN], [MOTI_REPA_TECN], [ESTA_ENVI_SII], [FECH_ENVI_SII], [ESTA_ENVI_CLI], [FECH_ENVI_CLI], [mont_neto_sii],' +
+                        '[mont_exen_sii], [mont_iva_sii], [codi_otro_sii], [valo_otro_sii], [tasa_otro_sii], [TIPO_COVE], [MONT_ISIR], [MONT_INOR], [CODI_INOR], [MONT_NACF], [IVAA_ACFI], [IVAU_COMU], [IMPU_SDAC], [IVAN_NORE],' +
+                        '[TABA_PURO], [TABA_CIGA], [TABA_ELAB], [NOCD_SFCO], [PERI_TRIB], [IVAR_TOTA], [IVAR_PARC], [IVAN_RETE], [IVAP_PROP], [IVAT_TERC], [RUTT_ELFA], [DIGI_ELFA], [NETO_CLFA], [EXEN_CLFA], [IVAA_CLFA], [IVAA_FDPL],' +
+                        '[TICO_REFE], [FODO_REFE], [NUMM_IREX], [NACI_REEX], [CRED_EMCO], [IMPT_ZOFR], [GARA_DEEN], [INDI_VSCO], [INDI_SEPE], [MONT_NOFA], [TOTA_MOPE], [VEPA_TRNA], [VEPA_TRIN], [NUME_INTE], [CODI_SUCU], [ESTA_RCV],' +
+                        '[DTEC_NELE], [TIPO_COMP]) VALUES
+						';
+						
+IF(@Tipo_docu <> 33 AND  @Tipo_docu <>34  and  @Tipo_docu <>43 and  @Tipo_docu <>46 and  @Tipo_docu <> 52 and  @Tipo_docu <>56 and  @Tipo_docu <>61)
+    BEGIN
+	RETURN   'Tipo de documento No es electronico'
+	END
+
+Else 
+IF(@Tipo_Carga <> 'RCV_CompraNoIncluir' AND @Tipo_Carga <>'RCV_CompraPendiente' AND   @Tipo_Carga <>'RCV_CompraReclamado' and  @Tipo_Carga <>'RCV_CompraRegistro' and  @Tipo_Carga <> 'RCV_Venta' and  @Tipo_Carga <>'BHR')
+    BEGIN
+	RETURN   'Tipo de carga no soportada'
+	END
+
+else
+IF(@Tipo_Carga = 'RCV_CompraNoIncluir')
+     Begin
+		  select top 1 @UltimoFolio=foli_docu from dte_control where tipo_docu=@Tipo_docu  order by FOLI_DOCU desc 
+	      DECLARE @Total INT = @CantidadCargar+@UltimoFolio;
+	       
+WHILE(@UltimoFolio < @Total ) BEGIN
+	set @UltimoFolio+= 1;		 
+		  set @insertvalor='(''RCP'', 78079790 , ''8'', ''CEM S.A'', NULL,78079790,''8'', '''',' + CAST(@Tipo_docu AS varchar(10))+  ','+CAST(@UltimoFolio AS varchar(10))+','''+@Fecha+''' , NULL, ''Recibido'', ''2022-01-10 16:20:35.000'','+
+		 '''2022-01-02 12:51:39.130'', NULL, 877987 , ''NO Cargado'', NULL, ''Sin Evento'', NULL, ''NO Cedido'', NULL, NULL, NULL,'+
+		 'NULL, NULL, NULL, ''Sin Respuesta'', NULL, NULL, NULL, ''Sin Recibo'', NULL, NULL, NULL, NULL, NULL, 73440.00 , ''Sin OC'', NULL, NULL,'+
+		 'NULL, NULL, NULL, NULL, NULL, NULL, 61714.00 , NULL, NULL, NULL, NULL, NULL, ''No Corresp. Incluir'', NULL, 11726.00 , 4 , NULL, NULL,'+
+		 'NULL, NULL, 0.00 , NULL, NULL, NULL, 0, ''202201'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'+
+		 'NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''No Incluir'',0 , ''COM'')';
+		 exec (@Definicion_dte_control + @insertvalor)
+		 print    'RCV_CompraNoIncluir documento tipo '+CAST(@Tipo_docu AS varchar(10))+ ' Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))+ ' insertado correctamente' 
+		 END
+	END
+IF(@Tipo_Carga = 'RCV_CompraPendiente')
+    BEGIN
+	print    'RCV_CompraPendiente  aun no implementado '
+	END
+
+IF(@Tipo_Carga = 'RCV_CompraReclamado')
+     Begin
+		  select top 1 @UltimoFolio=foli_docu from dte_control where tipo_docu=@Tipo_docu  order by FOLI_DOCU desc 
+	      DECLARE @TotalRecladado INT = @CantidadCargar+@UltimoFolio;
+	       
+WHILE(@UltimoFolio < @TotalRecladado ) BEGIN
+	set @UltimoFolio+= 1;		 
+		  set @insertvalor='(''RCP'', 78079790, ''8'', ''SOS ASISTENCIA CHILE SPA'', NULL, 78079790,''8'', '''',' + CAST(@Tipo_docu AS varchar(10))+  ','+CAST(@UltimoFolio AS varchar(10))+', '''+@Fecha+''' , NULL, ''Recibido'', ''2022-01-22 10:55:03.000'','+ 
+							'''2022-01-10 09:01:15.480'', NULL, 888033, ''NO Cargado'', NULL, ''Reclamado'', NULL, ''NO Cedido'', NULL, NULL, NULL, NULL, NULL, NULL, ''Sin Respuesta'','+
+							 'NULL, NULL, NULL, ''Sin Recibo'', NULL, NULL, NULL, NULL, NULL, 226928 ,  ''Sin OC'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 190696  , 0, NULL, NULL, NULL, NULL,'+
+							'''Del Giro'', 36232,   NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, ''202201'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'+
+							'NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''Reclamado'',0 , ''COM'')';
+		 exec (@Definicion_dte_control + @insertvalor)
+		 print   'RCV_CompraReclamado documento tipo '+CAST(@Tipo_docu AS varchar(10))+ ' Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))+ ' insertado correctamente' 
+		 END
+	END
+
+IF(@Tipo_Carga = 'RCV_CompraRegistro')
+    BEGIN
+	print    'RCV_CompraRegistro  aun no implementado' 
+	END
+
+IF(@Tipo_Carga = 'RCV_Venta')
+     Begin
+		  select top 1 @UltimoFolio=foli_docu from dte_control where tipo_docu=@Tipo_docu  order by FOLI_DOCU desc 
+	      DECLARE @TotalVenta INT = @CantidadCargar+@UltimoFolio;
+	       
+WHILE(@UltimoFolio < @TotalVenta ) BEGIN
+	set @UltimoFolio+= 1;		 
+		  set @insertvalor='(''EMI'', 78079790,''8'', '''', NULL, 78079790 , ''8'', ''INVERSIONES MALADETA LTDA'' ,' + CAST(@Tipo_docu AS varchar(10))+  ','+CAST(@UltimoFolio AS varchar(10))+','''+@Fecha+''', NULL, ''Recibido'', ''2022-01-01 08:50:17.000'','+ 
+							 '''2022-01-09 17:45:52.207'', NULL, 888033 , ''NO Cargado'', NULL, ''Sin Evento'', NULL, ''NO Cedido'', NULL, NULL, NULL, NULL, NULL, NULL, '+
+							 '''Sin Respuesta'', NULL, NULL, NULL, ''Sin Recibo'', NULL, NULL, NULL, NULL, NULL, 156929, ''Sin OC'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 131873,'+
+							 '0, 25056 , NULL, NULL, NULL, ''Del Giro'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ''202201'', 0, 0, 0, 0, 0, NULL, NULL, 0,'+
+							 '0, 0, 0,0, '''', '''', '''', ''0'', NULL, 0, 1, 0, 0,0, NULL, NULL, NULL, 65515137, ''Venta'', 0 , ''VEN'')';
+		 exec (@Definicion_dte_control + @insertvalor)
+		 
+		 print   'RCV_Venta documento tipo '+CAST(@Tipo_docu AS varchar(10))+ ' Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))+ ' insertado correctamente' 
+		 END
+	END
+
+IF(@Tipo_Carga = 'BHR')
+     Begin
+		  select top 1 @UltimoFolio=foli_docu from dte_control where tipo_docu=-1  order by FOLI_DOCU desc 
+	      DECLARE @TotalBHR INT = @CantidadCargar+@UltimoFolio;
+	       
+WHILE(@UltimoFolio < @TotalBHR ) BEGIN
+	set @UltimoFolio+= 1;		 
+		  set @insertvalor='(''BHR'', 9958456 , ''4'', ''FERNANDO MIGUEL CUBILLOS GOMEZ'', ''NO'', 78079790,''8'', ''DBNET INGENIERIA DE SOFTWARE S A'', -1,'+CAST(@UltimoFolio AS varchar(10))+','''+@Fecha+''', 0 ,'+
+							'''Recibida'', ''2020-11-02 00:00:00.000'', ''2020-11-09 15:22:42.217'', NULL, NULL, ''No Cargada'', NULL, ''VIG'','+ 
+							 '''2020-11-09 15:22:42.217'', ''No Aplica'', NULL, NULL, NULL, NULL, NULL, NULL, ''No Aplica'', NULL, NULL, NULL, ''VIG'', ''2020-11-09 15:22:42.217'','+ 
+							 '120456 , NULL, 14509, 134965, NULL, ''N'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'+
+							' NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,'+
+							' NULL, NULL, NULL, NULL, NULL, 0, NULL)';
+	      exec (@Definicion_dte_control + @insertvalor)
+		 --print @Definicion_dte_control + @insertvalor
+		 print   'BHR documento tipo '+CAST(@Tipo_docu AS varchar(10))+ ' Folio '+ CAST(@UltimoFolio AS NVARCHAR(100))+ ' insertado correctamente' 
+		 END
+	END
+END

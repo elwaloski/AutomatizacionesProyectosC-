@@ -1,0 +1,73 @@
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.Cache
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+C:\Users\waldo.gonzalez\Documents\Visual Studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csprojAssemblyReference.cache
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.cache
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csprojAssemblyReference.cache
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.cache
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+C:\Users\walo_\Desktop\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
+C:\Users\waldo.gonzalez\documents\visual studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csprojAssemblyReference.cache
+C:\Users\waldo.gonzalez\documents\visual studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CoreCompileInputs.cache
+C:\Users\waldo.gonzalez\documents\visual studio 2017\Projects\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.AssemblyReference.cache
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.SuggestedBindingRedirects.cache
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.cache
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CoreCompileInputs.cache
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+D:\RepositorioQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.AssemblyReference.cache
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.SuggestedBindingRedirects.cache
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.cache
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CoreCompileInputs.cache
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+D:\Repositorios\RepoQA\trunk\Proyectos\Herramientas\Carga Directa BD SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe.config
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.exe
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\bin\Release\Carga Directa BD SE.pdb
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\bin\Release\Oracle.ManagedDataAccess.dll
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.AssemblyReference.cache
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.SuggestedBindingRedirects.cache
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Form1.resources
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga_Directa_BD_SE.Properties.Resources.resources
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.GenerateResource.cache
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CoreCompileInputs.cache
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.csproj.CopyComplete
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.exe
+C:\Users\waldo.gonzalez\Desktop\RespaldoRepositorio\trunk\3_Codigo_Proyectos_Automatizados\Herramientas\Carga_Directa_BD_SE\Carga Directa BD SE\obj\Release\Carga Directa BD SE.pdb
