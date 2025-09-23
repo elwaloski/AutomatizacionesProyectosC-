@@ -1,0 +1,13 @@
+D:\ProyectosVisual\GeneradorJsonFECO\bin\Release\GeneradorJsonFECO.exe.config
+D:\ProyectosVisual\GeneradorJsonFECO\bin\Release\GeneradorJsonFECO.exe
+D:\ProyectosVisual\GeneradorJsonFECO\bin\Release\GeneradorJsonFECO.pdb
+D:\ProyectosVisual\GeneradorJsonFECO\bin\Release\Newtonsoft.Json.dll
+D:\ProyectosVisual\GeneradorJsonFECO\bin\Release\Newtonsoft.Json.xml
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.csprojAssemblyReference.cache
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.Form1.resources
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.Properties.Resources.resources
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.csproj.GenerateResource.cache
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.csproj.CoreCompileInputs.cache
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.csproj.CopyComplete
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.exe
+D:\ProyectosVisual\GeneradorJsonFECO\obj\Release\GeneradorJsonFECO.pdb
