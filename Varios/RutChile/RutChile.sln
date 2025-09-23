@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutChile", "RutChile\RutChile.csproj", "{AAC31FD2-C492-4140-BA4F-14A5EB1FF1DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RutChileTest", "RutChileTest\RutChileTest.csproj", "{A9980A39-305D-46E6-85E6-C9348ED9A758}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package", "package", "{D1642CF7-8CDD-431B-86F7-9D08335267BF}"
+	ProjectSection(SolutionItems) = preProject
+		RutChile.nuspec = RutChile.nuspec
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8112030F-21A4-405A-8CE7-2EF5B966D7F1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "result", "result", "{41647751-9690-4CD0-BF6D-CA932B634E10}"
+	ProjectSection(SolutionItems) = preProject
+		RutChile\bin\Debug\RutChile.1.1.0.nupkg = RutChile\bin\Debug\RutChile.1.1.0.nupkg
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AAC31FD2-C492-4140-BA4F-14A5EB1FF1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAC31FD2-C492-4140-BA4F-14A5EB1FF1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAC31FD2-C492-4140-BA4F-14A5EB1FF1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAC31FD2-C492-4140-BA4F-14A5EB1FF1DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9980A39-305D-46E6-85E6-C9348ED9A758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9980A39-305D-46E6-85E6-C9348ED9A758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9980A39-305D-46E6-85E6-C9348ED9A758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9980A39-305D-46E6-85E6-C9348ED9A758}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C8C15B01-A369-4523-9BB8-A7FA2791D3E4}
+	EndGlobalSection
+EndGlobal
