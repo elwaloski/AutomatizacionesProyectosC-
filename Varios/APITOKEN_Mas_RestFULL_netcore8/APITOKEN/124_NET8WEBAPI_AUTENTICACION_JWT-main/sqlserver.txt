@@ -1,0 +1,62 @@
+create database Esqueleto
+go
+use Esqueleto
+
+CREATE TABLE [dbo].[Personas](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Rut] [varchar](12) NOT NULL,
+	[Nombre] [varchar](100) NOT NULL,
+	[Sexo] [char](1) NULL,
+	[Edad] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Rut] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Personas]  WITH CHECK ADD CHECK  (([Edad]>=(0)))
+GO
+
+ALTER TABLE [dbo].[Personas]  WITH CHECK ADD CHECK  (([Sexo]='F' OR [Sexo]='M'))
+GO
+
+
+create table Usuario(
+IdUsuario int primary key identity,
+Nombre varchar(50),
+Correo varchar(50),
+Clave varchar(100)
+)
+
+go
+
+create table Producto(
+IdProducto int primary key identity,
+Nombre varchar(50),
+Marca varchar(50),
+Precio decimal(10,2)
+)
+
+go
+
+
+insert into Producto
+(Nombre,
+Marca,
+Precio)
+values
+(
+'Laptop gamer 1001',
+'HP',
+3500
+),
+(
+'Monitor curvo HD',
+'Samsung',
+2000
+)

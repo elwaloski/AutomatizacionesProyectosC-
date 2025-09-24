@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\APIFULLRESTNETCORE8.props" />
+</Project>
