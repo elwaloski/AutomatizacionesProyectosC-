@@ -1,0 +1,14 @@
+Crear imagen docker
+docker build -t tokenapi:1.0 . 
+
+docker ps  
+lista docker corriendo
+
+Detiene docker
+docker stop 6dd8089fb4ac 
+
+Elimina docker 
+docker rm 6dd8089fb4ac    
+
+corre imegen docker 
+docker run -d -p 8080:8080 -e ASPNETCORE_ENVIRONMENT=Development tokenapi:1.0
